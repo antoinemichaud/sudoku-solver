@@ -45,4 +45,32 @@ public class GridHints {
 
         return hash;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        int per3ColumnCounter = 0;
+        int per3RowCounter = 0;
+        for (int row = 0; row < 9; row++) {
+            for (int column = 0; column < 9; column++) {
+                per3ColumnCounter++;
+                stringBuilder.append(get(row, column).orElse(0)).append(" ");
+                if (per3ColumnCounter == 3 || per3ColumnCounter == 6) {
+                    stringBuilder.append("\t");
+                }
+                if (per3ColumnCounter == 9) {
+                    per3ColumnCounter = 0;
+                    per3RowCounter++;
+                    stringBuilder.append("\n");
+                    if (per3RowCounter == 3 || per3RowCounter == 6) {
+                        stringBuilder.append("\n");
+                    }
+                }
+            }
+        }
+
+        return "GridHints{" +
+                "gridHints=\n" + stringBuilder +
+                '}';
+    }
 }

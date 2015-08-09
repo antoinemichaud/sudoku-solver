@@ -13,4 +13,12 @@ public class Grid {
     public int size() {
         return size;
     }
+
+    public LineHints getRow(int rowNum) {
+        LineHints lineHints = new LineHints();
+        for (int i = 0; i < size; i++) {
+            lineHints.lineHints.put(i, gridHints.get(rowNum, i).orElse(0));
+        }
+        return lineHints;
+    }
 }
