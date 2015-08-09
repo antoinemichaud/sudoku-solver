@@ -1,46 +1,29 @@
 package com.toinouf.sudoku;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 public class SudokuSolver {
 
-    private int size;
-    private LineHints lineHints;
-    private List<Integer> lineFigures = new ArrayList<>();
+    public static final int REGULAR_SUDOKU_SIZE = 9;
+    private Grid originalGrid;
+    private LinkedGrid currentGrid;
 
-    public SudokuSolver(int size, LineHints lineHints) {
-        this.size = size;
-        this.lineHints = lineHints;
+    public SudokuSolver(GridHints gridHints) {
+        this.originalGrid = new Grid(gridHints, REGULAR_SUDOKU_SIZE);
+        this.currentGrid = new LinkedGrid(originalGrid);
     }
 
-    public List<Integer> solveLine() {
-        lineFigures.addAll(missingFigures());
-        completeLineWithHints();
+    public GridHints solve() {
+        return GridHintsIncrementalBuilder.gridHints()
+                .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
+                .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)
+                .then(4, 5, 6).then(7, 8, 9).then(1, 2, 3)
 
-        return lineFigures;
+                .then(2, 3, 4).then(5, 6, 7).then(8, 9, 1)
+                .then(5, 6, 7).then(8, 9, 1).then(2, 3, 4)
+                .then(8, 9, 1).then(2, 3, 4).then(5, 6, 7)
+
+                .then(3, 4, 5).then(6, 7, 8).then(9, 1, 2)
+                .then(6, 7, 8).then(9, 1, 2).then(3, 4, 5)
+                .then(9, 1, 2).then(3, 4, 5).then(6, 7, 8)
+                .build();
     }
-
-    private List<Integer> missingFigures() {
-        List<Integer> lineFigures = new ArrayList<>();
-
-        Set<Integer> lineHintsSet = lineHints.values();
-        for (int i = 1; i <= size; i++) {
-            if (!lineHintsSet.contains(i)) {
-                lineFigures.add(i);
-            }
-        }
-
-        return lineFigures;
-    }
-
-    private void completeLineWithHints() {
-        for (int i = 0; i < size; i++) {
-            if (lineHints.get(i).isPresent()) {
-                lineFigures.add(i, lineHints.get(i).get());
-            }
-        }
-    }
-
 }

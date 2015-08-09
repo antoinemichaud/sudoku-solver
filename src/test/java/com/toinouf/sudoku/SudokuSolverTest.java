@@ -1,61 +1,37 @@
 package com.toinouf.sudoku;
 
-
+import com.toinouf.util.Pair;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.HashMap;
 
-import static com.toinouf.sudoku.LineHintsBuilder.lineHints;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 public class SudokuSolverTest {
 
     @Test
-    public void should_be_able_to_find_combination_for_one_line_of_1_figure() {
+    public void should_resolve_this() throws Exception {
         // Given
-        SudokuSolver sudokuSolver = new SudokuSolver(1, lineHints().build());
+        GridHints gridHints = GridHintsIncrementalBuilder.gridHints()
+                .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
+                .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)
+                .then(4, 5, 6).then(7, 8, 9).then(1, 2, 3)
+
+                .then(2, 3, 4).then(5, 6, 7).then(8, 9, 1)
+                .then(5, 6, 7).then(8, 9, 1).then(2, 3, 4)
+                .then(8, 9, 1).then(2, 3, 4).then(5, 6, 7)
+
+                .then(3, 4, 5).then(6, 7, 8).then(9, 1, 2)
+                .then(6, 7, 8).then(9, 1, 2).then(3, 4, 5)
+                .then(9, 1, 2).then(3, 4, 5).then(6, 7, 8)
+                .build();
+        SudokuSolver sudokuSolver = new SudokuSolver(gridHints);
+
 
         // When
-        List<Integer> lineFigures = sudokuSolver.solveLine();
+        GridHints solvedGrid = sudokuSolver.solve();
 
         // Then
-        assertThat(lineFigures).containsExactly(1);
+        assertThat(solvedGrid).isEqualTo(gridHints);
     }
-
-    @Test
-    public void should_be_able_to_find_combination_for_one_line_of_2_figures() {
-        // Given
-        SudokuSolver sudokuSolver = new SudokuSolver(2, lineHints().build());
-
-        // When
-        List<Integer> lineFigures = sudokuSolver.solveLine();
-
-        // Then
-        assertThat(lineFigures).containsExactly(1, 2);
-    }
-
-    @Test
-    public void should_be_able_to_find_combination_for_one_line_of_2_figures_and_one_hint() {
-        // Given
-        SudokuSolver sudokuSolver = new SudokuSolver(2, lineHints().withLineHint(0, 2).build());
-
-        // When
-        List<Integer> lineFigures = sudokuSolver.solveLine();
-
-        // Then
-        assertThat(lineFigures).containsExactly(2, 1);
-    }
-
-    @Test
-    public void should_be_able_to_find_combination_for_one_line_of_9_figures_and_two_hints() {
-        // Given
-        SudokuSolver sudokuSolver = new SudokuSolver(9, lineHints().withLineHint(0, 2).withLineHint(5, 1).build());
-
-        // When
-        List<Integer> lineFigures = sudokuSolver.solveLine();
-
-        // Then
-        assertThat(lineFigures).containsExactly(2, 3, 4, 5, 6, 1, 7, 8, 9);
-    }
-
 }
