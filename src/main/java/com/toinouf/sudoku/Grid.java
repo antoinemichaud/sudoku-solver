@@ -21,4 +21,12 @@ public class Grid {
         }
         return lineHints;
     }
+
+    public LineHints getColumn(int columnNum) {
+        LineHints lineHints = new LineHints();
+        for (int i = 0; i < size; i++) {
+            lineHints.lineHints.put(i, gridHints.get(i, columnNum).orElse(0));
+        }
+        return lineHints;
+    }
 }
