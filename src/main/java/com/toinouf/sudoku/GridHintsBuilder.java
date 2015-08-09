@@ -13,7 +13,7 @@ public class GridHintsBuilder {
         return new GridHintsBuilder();
     }
 
-    public GridHintsBuilder withLineHint(int row, int column, int value) {
+    public GridHintsBuilder withHint(int row, int column, int value) {
         this.gridHints.put(new Pair<>(row, column), value);
         return this;
     }

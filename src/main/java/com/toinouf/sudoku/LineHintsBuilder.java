@@ -11,7 +11,7 @@ public class LineHintsBuilder {
         return new LineHintsBuilder();
     }
 
-    public LineHintsBuilder withLineHint(int position, int value) {
+    public LineHintsBuilder withHint(int position, int value) {
         this.lineHints.put(position, value);
         return this;
     }

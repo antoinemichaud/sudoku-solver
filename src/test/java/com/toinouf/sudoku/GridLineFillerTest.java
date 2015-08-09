@@ -37,7 +37,7 @@ public class GridLineFillerTest {
     @Test
     public void should_be_able_to_find_combination_for_one_line_of_2_figures_and_one_hint() {
         // Given
-        GridLineFiller gridLineFiller = new GridLineFiller(2, lineHints().withLineHint(0, 2).build());
+        GridLineFiller gridLineFiller = new GridLineFiller(2, lineHints().withHint(0, 2).build());
 
         // When
         List<Integer> lineFigures = gridLineFiller.constituteLine();
@@ -49,7 +49,7 @@ public class GridLineFillerTest {
     @Test
     public void should_be_able_to_find_combination_for_one_line_of_9_figures_and_two_hints() {
         // Given
-        GridLineFiller gridLineFiller = new GridLineFiller(9, lineHints().withLineHint(0, 2).withLineHint(5, 1).build());
+        GridLineFiller gridLineFiller = new GridLineFiller(9, lineHints().withHint(0, 2).withHint(5, 1).build());
 
         // When
         List<Integer> lineFigures = gridLineFiller.constituteLine();

@@ -24,7 +24,6 @@ public class LineHints {
         return lineHints.values().stream().collect(Collectors.toSet());
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,5 +62,18 @@ public class LineHints {
         return "LineHints{" +
                 "lineHints=\n" + stringBuilder +
                 '}';
+    }
+
+    public boolean isValidForSize(int size) {
+        Set<Integer> undiscoveredIntegers = new HashSet<>();
+        for (int i = 1; i <= size; i++) {
+            undiscoveredIntegers.add(i);
+        }
+        for (Integer foundHint : values()) {
+            if (!undiscoveredIntegers.remove(foundHint)) {
+                return false;
+            }
+        }
+        return undiscoveredIntegers.isEmpty();
     }
 }
