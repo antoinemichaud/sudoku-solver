@@ -1,5 +1,6 @@
 package com.toinouf.sudoku;
 
+import com.toinouf.util.Pair;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -50,10 +51,7 @@ public class GridTest {
         // Given
         Grid grid = new Grid(gridHints().withHint(1, 0, 3).withHint(2, 7, 9).build(), 9);
 
-        // When
-        LineHints lineHintsCollection = grid.getColumn(0);
-
-        // Then
+        // When / Then
         assertThat(grid.getColumn(0)).isEqualTo(LineHintsBuilder.lineHints().withHint(1, 3).build());
         assertThat(grid.getColumn(1)).isEqualTo(LineHintsBuilder.lineHints().build());
         assertThat(grid.getColumn(2)).isEqualTo(LineHintsBuilder.lineHints().build());
@@ -63,5 +61,80 @@ public class GridTest {
         assertThat(grid.getColumn(6)).isEqualTo(LineHintsBuilder.lineHints().build());
         assertThat(grid.getColumn(7)).isEqualTo(LineHintsBuilder.lineHints().withHint(2, 9).build());
         assertThat(grid.getColumn(8)).isEqualTo(LineHintsBuilder.lineHints().build());
+    }
+
+    @Test
+    public void should_get_square() throws Exception {
+        // Given
+        Grid grid = new Grid(GridHintsIncrementalBuilder.gridHints()
+                .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
+                .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)
+                .then(4, 5, 6).then(7, 8, 9).then(1, 2, 3)
+
+                .then(2, 3, 4).then(5, 6, 7).then(8, 9, 1)
+                .then(5, 6, 7).then(8, 9, 1).then(2, 3, 4)
+                .then(8, 9, 1).then(2, 3, 4).then(5, 6, 7)
+
+                .then(3, 4, 5).then(6, 7, 8).then(9, 1, 2)
+                .then(6, 7, 8).then(9, 1, 2).then(3, 4, 5)
+                .then(9, 1, 2).then(3, 4, 5).then(6, 7, 8)
+                .build(), 9);
+
+        // When / Then
+        assertThat(grid.getSquare(new Pair<>(0, 0), 3)).isEqualTo(LineHintsBuilder
+                .with(1).and(2).and(3)
+                .and(7).and(8).and(9)
+                .and(4).and(5).and(6)
+                .build());
+    }
+
+    @Test
+    public void should_get_square_of_index_non_zero_for_column() throws Exception {
+        // Given
+        Grid grid = new Grid(GridHintsIncrementalBuilder.gridHints()
+                .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
+                .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)
+                .then(4, 5, 6).then(7, 8, 9).then(1, 2, 3)
+
+                .then(2, 3, 4).then(5, 6, 7).then(8, 9, 1)
+                .then(5, 6, 7).then(8, 9, 1).then(2, 3, 4)
+                .then(8, 9, 1).then(2, 3, 4).then(5, 6, 7)
+
+                .then(3, 4, 5).then(6, 7, 8).then(9, 1, 2)
+                .then(6, 7, 8).then(9, 1, 2).then(3, 4, 5)
+                .then(9, 1, 2).then(3, 4, 5).then(6, 7, 8)
+                .build(), 9);
+
+        // When / Then
+        assertThat(grid.getSquare(new Pair<>(0, 1), 3)).isEqualTo(LineHintsBuilder
+                .with(2).and(3).and(4)
+                .and(8).and(9).and(1)
+                .and(5).and(6).and(7)
+                .build());
+    }
+
+    @Test
+    public void should_get_square_for_non_zero_index() throws Exception {
+        // Given
+        Grid grid = new Grid(GridHintsIncrementalBuilder.gridHints()
+                .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
+                .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)
+                .then(4, 5, 6).then(7, 8, 9).then(1, 2, 3)
+
+                .then(2, 3, 4).then(5, 6, 7).then(8, 9, 1)
+                .then(5, 6, 7).then(8, 9, 1).then(2, 3, 4)
+                .then(8, 9, 1).then(2, 3, 4).then(5, 6, 7)
+
+                .then(3, 4, 5).then(6, 7, 8).then(9, 1, 2)
+                .then(6, 7, 8).then(9, 1, 2).then(3, 4, 5)
+                .then(9, 1, 2).then(3, 4, 5).then(6, 7, 8)
+                .build(), 9);
+
+        // When / Then
+        assertThat(grid.getSquare(new Pair<>(1, 1), 3)).isEqualTo(LineHintsBuilder
+                .with(8).and(9).and(1)
+                .and(5).and(6).and(7)
+                .and(3).and(4).and(5)
+                .build());
     }
 }

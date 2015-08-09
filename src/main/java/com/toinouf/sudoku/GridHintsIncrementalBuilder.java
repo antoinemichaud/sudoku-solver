@@ -14,20 +14,20 @@ public class GridHintsIncrementalBuilder {
         return new GridHintsIncrementalBuilder();
     }
 
-    public GridHintsIncrementalBuilder then(int value) {
-        this.gridHints.put(new Pair<>(row, column), value);
-        increment();
-        return this;
-    }
-
     public GridHintsIncrementalBuilder then(int a, int b, int c) {
         then(a);
         then(b);
         return then(c);
     }
 
+    public GridHintsIncrementalBuilder then(int value) {
+        this.gridHints.put(new Pair<>(row, column), value);
+        increment();
+        return this;
+    }
+
     private void increment() {
-        if (column == 9) {
+        if (column == 8) {
             row++;
             column = 0;
         } else {
