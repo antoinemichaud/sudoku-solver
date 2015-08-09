@@ -1,24 +1,26 @@
 package com.toinouf.sudoku;
 
+import com.toinouf.functional.FunctionalList;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class PermutationsFinder {
-    private List<Integer> figuresToPermute;
+    private FunctionalList<Integer> figuresToPermute;
 
     public PermutationsFinder(List<Integer> figuresToPermute) {
-        this.figuresToPermute = figuresToPermute;
+        this.figuresToPermute = new FunctionalList<>(figuresToPermute);
     }
 
     public List<List<Integer>> permutations() {
-        return permutationsPrivate(new ArrayList<>(figuresToPermute));
+        return permutationsPrivate(figuresToPermute.copy());
     }
 
-    public List<List<Integer>> permutationsPrivate(List<Integer> figuresToPermute) {
+    public List<List<Integer>> permutationsPrivate(FunctionalList<Integer> figuresToPermute) {
         ArrayList<List<Integer>> permutations = new ArrayList<>();
         for (int i = 0; i < figuresToPermute.size(); i++) {
-            ArrayList<Integer> figuresToPermuteForChildren = new ArrayList<>(figuresToPermute);
-            Integer chosenHead = figuresToPermuteForChildren.remove(i);
+            FunctionalList<Integer> figuresToPermuteForChildren = figuresToPermute.copy();
+            Integer chosenHead = figuresToPermuteForChildren.removeElementAt(i);
             if (figuresToPermuteForChildren.size() > 0) {
                 List<List<Integer>> childrenPermutations = permutationsPrivate(figuresToPermuteForChildren);
                 for (List<Integer> childrenPermutation : childrenPermutations) {
