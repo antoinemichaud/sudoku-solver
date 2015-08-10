@@ -61,10 +61,11 @@ public class Grid {
     }
 
     public boolean isValid() {
-        boolean isGridValid = true;
         for (int i = 0; i < REGULAR_SUDOKU_SIZE; i++) {
-            isGridValid &= getColumn(i).isValid();
+            if (!getColumn(i).isValid()) {
+                return false;
+            }
         }
-        return isGridValid;
+        return true;
     }
 }
