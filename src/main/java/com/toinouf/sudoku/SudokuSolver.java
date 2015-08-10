@@ -9,6 +9,7 @@ public class SudokuSolver {
     public static final int REGULAR_SUDOKU_SIZE = 9;
     private Grid originalGrid;
     private LinkedGrid currentGrid;
+    private LineHints rowBeingSolvedNow;
 
     public SudokuSolver(GridHints gridHints) {
         this.originalGrid = new Grid(gridHints, REGULAR_SUDOKU_SIZE);
@@ -16,28 +17,25 @@ public class SudokuSolver {
     }
 
     public GridHints solve() {
-        LineHints rowToSolve = currentGrid.getRow(0);
-        if (!rowToSolve.isValidForSize(9)) {
-            List<Integer> missingFigures = GridLineFiller.missingFigures(rowToSolve, 9);
-            PermutationsFinder permutationsFinder = new PermutationsFinder(missingFigures);
-            List<List<Integer>> possiblePermutations = permutationsFinder.permutations();
+        rowBeingSolvedNow = currentGrid.getRow(0);
 
-            for (List<Integer> possiblePermutation : possiblePermutations) {
-                GridLineFiller gridLineFiller = new GridLineFiller(9, rowToSolve);
-                List<Integer> filledLine = gridLineFiller.constituteLine(possiblePermutation);
-                currentGrid.setRow(0, LineHintsBuilder.from(filledLine));
-                boolean isGridValid = true;
-                for (int i = 0; i < REGULAR_SUDOKU_SIZE; i++) {
-                    isGridValid = currentGrid.getColumn(i).isValidForSize(REGULAR_SUDOKU_SIZE);
-                    if (!isGridValid)
-                        break;
-                }
-                if (isGridValid) {
-                    break;
-                }
-            }
+        if (!rowBeingSolvedNow.isValid()) {
+            PermutationsFinder permutationsFinder = new PermutationsFinder(rowBeingSolvedNow.missingFigures());
+            fillWithAValidPermutation(permutationsFinder.permutations());
         }
 
         return currentGrid.gridHints;
     }
+
+    private void fillWithAValidPermutation(List<List<Integer>> possiblePermutations) {
+        for (List<Integer> possiblePermutation : possiblePermutations) {
+            GridLineFiller gridLineFiller = new GridLineFiller(9, rowBeingSolvedNow);
+            List<Integer> filledLine = gridLineFiller.constituteLine(possiblePermutation);
+            currentGrid.setRow(0, LineHintsBuilder.from(filledLine));
+            if (currentGrid.isValid()) {
+                break;
+            }
+        }
+    }
+
 }

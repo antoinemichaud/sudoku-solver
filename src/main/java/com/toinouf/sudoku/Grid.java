@@ -4,6 +4,8 @@ import com.toinouf.util.Pair;
 
 import java.util.Optional;
 
+import static com.toinouf.sudoku.SudokuSolver.REGULAR_SUDOKU_SIZE;
+
 public class Grid {
 
     protected GridHints gridHints;
@@ -19,7 +21,7 @@ public class Grid {
     }
 
     public LineHints getRow(int rowNum) {
-        LineHints lineHints = new LineHints();
+        LineHints lineHints = new LineHints(size);
         for (int i = 0; i < size; i++) {
             Optional<Integer> optionalHint = gridHints.get(rowNum, i);
             if (optionalHint.isPresent()) {
@@ -36,7 +38,7 @@ public class Grid {
     }
 
     public LineHints getColumn(int columnNum) {
-        LineHints lineHints = new LineHints();
+        LineHints lineHints = new LineHints(size);
         for (int i = 0; i < size; i++) {
             Optional<Integer> optionalHint = gridHints.get(i, columnNum);
             if (optionalHint.isPresent()) {
@@ -47,7 +49,7 @@ public class Grid {
     }
 
     public LineHints getSquare(Pair<Integer> topLeftCornerPos, int size) {
-        LineHints lineHints = new LineHints();
+        LineHints lineHints = new LineHints(size);
         int pos = 0;
         for (int row = topLeftCornerPos.left; row < size + topLeftCornerPos.left; row++) {
             for (int column = topLeftCornerPos.right; column < size + topLeftCornerPos.right; column++) {
@@ -56,5 +58,13 @@ public class Grid {
             }
         }
         return lineHints;
+    }
+
+    public boolean isValid() {
+        boolean isGridValid = true;
+        for (int i = 0; i < REGULAR_SUDOKU_SIZE; i++) {
+            isGridValid &= getColumn(i).isValid();
+        }
+        return isGridValid;
     }
 }

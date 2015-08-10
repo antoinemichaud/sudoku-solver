@@ -19,7 +19,7 @@ public class GridTest {
         LineHints lineHints = grid.getRow(0);
 
         // Then
-        assertThat(lineHints).isEqualTo(LineHintsBuilder.lineHints().build());
+        assertThat(lineHints).isEqualTo(LineHintsBuilder.lineHintsWithSize(9).build());
     }
 
     @Test
@@ -31,7 +31,7 @@ public class GridTest {
         LineHints lineHints = grid.getRow(0);
 
         // Then
-        assertThat(lineHints).isEqualTo(LineHintsBuilder.lineHints().withHint(0, 3).withHint(8, 9).build());
+        assertThat(lineHints).isEqualTo(LineHintsBuilder.lineHintsWithSize(9).withHint(0, 3).withHint(8, 9).build());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class GridTest {
         LineHints lineHints = grid.getRow(1);
 
         // Then
-        assertThat(lineHints).isEqualTo(LineHintsBuilder.lineHints().withHint(0, 3).build());
+        assertThat(lineHints).isEqualTo(LineHintsBuilder.lineHintsWithSize(9).withHint(0, 3).build());
     }
 
     @Test
@@ -52,15 +52,15 @@ public class GridTest {
         Grid grid = new Grid(gridHints().withHint(1, 0, 3).withHint(2, 7, 9).build(), 9);
 
         // When / Then
-        assertThat(grid.getColumn(0)).isEqualTo(LineHintsBuilder.lineHints().withHint(1, 3).build());
-        assertThat(grid.getColumn(1)).isEqualTo(LineHintsBuilder.lineHints().build());
-        assertThat(grid.getColumn(2)).isEqualTo(LineHintsBuilder.lineHints().build());
-        assertThat(grid.getColumn(3)).isEqualTo(LineHintsBuilder.lineHints().build());
-        assertThat(grid.getColumn(4)).isEqualTo(LineHintsBuilder.lineHints().build());
-        assertThat(grid.getColumn(5)).isEqualTo(LineHintsBuilder.lineHints().build());
-        assertThat(grid.getColumn(6)).isEqualTo(LineHintsBuilder.lineHints().build());
-        assertThat(grid.getColumn(7)).isEqualTo(LineHintsBuilder.lineHints().withHint(2, 9).build());
-        assertThat(grid.getColumn(8)).isEqualTo(LineHintsBuilder.lineHints().build());
+        assertThat(grid.getColumn(0)).isEqualTo(LineHintsBuilder.lineHintsWithSize(9).withHint(1, 3).build());
+        assertThat(grid.getColumn(1)).isEqualTo(LineHintsBuilder.lineHintsWithSize(9).build());
+        assertThat(grid.getColumn(2)).isEqualTo(LineHintsBuilder.lineHintsWithSize(9).build());
+        assertThat(grid.getColumn(3)).isEqualTo(LineHintsBuilder.lineHintsWithSize(9).build());
+        assertThat(grid.getColumn(4)).isEqualTo(LineHintsBuilder.lineHintsWithSize(9).build());
+        assertThat(grid.getColumn(5)).isEqualTo(LineHintsBuilder.lineHintsWithSize(9).build());
+        assertThat(grid.getColumn(6)).isEqualTo(LineHintsBuilder.lineHintsWithSize(9).build());
+        assertThat(grid.getColumn(7)).isEqualTo(LineHintsBuilder.lineHintsWithSize(9).withHint(2, 9).build());
+        assertThat(grid.getColumn(8)).isEqualTo(LineHintsBuilder.lineHintsWithSize(9).build());
     }
 
     @Test
@@ -81,8 +81,8 @@ public class GridTest {
                 .build(), 9);
 
         // When / Then
-        assertThat(grid.getSquare(new Pair<>(0, 0), 3)).isEqualTo(LineHintsBuilder
-                .with(1).and(2).and(3)
+        assertThat(grid.getSquare(new Pair<>(0, 0), 3)).isEqualTo(LineHintsBuilder.lineHintsWithSize(9)
+                .and(1).and(2).and(3)
                 .and(7).and(8).and(9)
                 .and(4).and(5).and(6)
                 .build());
@@ -106,8 +106,8 @@ public class GridTest {
                 .build(), 9);
 
         // When / Then
-        assertThat(grid.getSquare(new Pair<>(0, 1), 3)).isEqualTo(LineHintsBuilder
-                .with(2).and(3).and(4)
+        assertThat(grid.getSquare(new Pair<>(0, 1), 3)).isEqualTo(LineHintsBuilder.lineHintsWithSize(9)
+                .and(2).and(3).and(4)
                 .and(8).and(9).and(1)
                 .and(5).and(6).and(7)
                 .build());
@@ -131,8 +131,8 @@ public class GridTest {
                 .build(), 9);
 
         // When / Then
-        assertThat(grid.getSquare(new Pair<>(1, 1), 3)).isEqualTo(LineHintsBuilder
-                .with(8).and(9).and(1)
+        assertThat(grid.getSquare(new Pair<>(1, 1), 3)).isEqualTo(LineHintsBuilder.lineHintsWithSize(9)
+                .and(8).and(9).and(1)
                 .and(5).and(6).and(7)
                 .and(3).and(4).and(5)
                 .build());

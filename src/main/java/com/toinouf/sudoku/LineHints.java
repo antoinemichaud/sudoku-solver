@@ -6,11 +6,14 @@ import java.util.stream.Collectors;
 public class LineHints {
 
     Map<Integer, Integer> lineHints = new HashMap<>();
+    private int size;
 
-    public LineHints() {
+    public LineHints(int size) {
+        this.size = size;
     }
 
-    public LineHints(Map<Integer, Integer> lineHints) {
+    public LineHints(int size, Map<Integer, Integer> lineHints) {
+        this.size = size;
         this.lineHints = lineHints;
     }
 
@@ -26,9 +29,22 @@ public class LineHints {
         return lineHints.values();
     }
 
-    public boolean isValidForSize(int size) {
-        Set<Integer> undiscoveredIntegers = new HashSet<>();
+    public List<Integer> missingFigures() {
+        List<Integer> missingFigures = new ArrayList<>();
+
+        Set<Integer> lineHintsSet = valuesSet();
         for (int i = 1; i <= size; i++) {
+            if (!lineHintsSet.contains(i)) {
+                missingFigures.add(i);
+            }
+        }
+
+        return missingFigures;
+    }
+
+    public boolean isValid() {
+        Set<Integer> undiscoveredIntegers = new HashSet<>();
+        for (int i = 1; i <= this.size; i++) {
             undiscoveredIntegers.add(i);
         }
         for (Integer foundHint : values()) {

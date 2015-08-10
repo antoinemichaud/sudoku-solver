@@ -6,19 +6,16 @@ import java.util.Map;
 
 public class LineHintsBuilder {
 
+    private int size;
     private Map<Integer, Integer> lineHints = new HashMap<>();
     private int position = 0;
 
-    public static LineHintsBuilder lineHints() {
-        return new LineHintsBuilder();
+    public LineHintsBuilder(int size) {
+        this.size = size;
     }
 
-    public static LineHintsBuilder with(int value) {
-        LineHintsBuilder lineHintsBuilder = new LineHintsBuilder();
-        if (value != 0) {
-            lineHintsBuilder.and(value);
-        }
-        return lineHintsBuilder;
+    public static LineHintsBuilder lineHintsWithSize(int size) {
+        return new LineHintsBuilder(size);
     }
 
     public LineHintsBuilder and(int value) {
@@ -39,7 +36,7 @@ public class LineHintsBuilder {
     }
 
     public LineHints build() {
-        return new LineHints(lineHints);
+        return new LineHints(size, lineHints);
     }
 
     public static LineHints from(List<Integer> filledLine) {
@@ -48,6 +45,6 @@ public class LineHintsBuilder {
             Integer hint = filledLine.get(i);
             lineHintsMap.put(i, hint);
         }
-        return new LineHints(lineHintsMap);
+        return new LineHints(filledLine.size(), lineHintsMap);
     }
 }
