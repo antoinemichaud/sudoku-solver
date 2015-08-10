@@ -2,6 +2,8 @@ package com.toinouf.sudoku;
 
 import com.toinouf.util.Pair;
 
+import java.util.Optional;
+
 public class Grid {
 
     protected GridHints gridHints;
@@ -19,7 +21,10 @@ public class Grid {
     public LineHints getRow(int rowNum) {
         LineHints lineHints = new LineHints();
         for (int i = 0; i < size; i++) {
-            lineHints.lineHints.put(i, gridHints.get(rowNum, i).orElse(0));
+            Optional<Integer> optionalHint = gridHints.get(rowNum, i);
+            if (optionalHint.isPresent()) {
+                lineHints.lineHints.put(i, optionalHint.get());
+            }
         }
         return lineHints;
     }
@@ -27,7 +32,10 @@ public class Grid {
     public LineHints getColumn(int columnNum) {
         LineHints lineHints = new LineHints();
         for (int i = 0; i < size; i++) {
-            lineHints.lineHints.put(i, gridHints.get(i, columnNum).orElse(0));
+            Optional<Integer> optionalHint = gridHints.get(i, columnNum);
+            if (optionalHint.isPresent()) {
+                lineHints.lineHints.put(i, optionalHint.get());
+            }
         }
         return lineHints;
     }
