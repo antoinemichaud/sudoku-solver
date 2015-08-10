@@ -134,4 +134,24 @@ public class SudokuSolverTest {
                 .then(9, 1, 2).then(3, 4, 5).then(6, 7, 8)
                 .build());
     }
+
+    @Test
+    public void should_resolve_grid_with_two_holes_in_first_row() throws Exception {
+        // Given
+        GridHints gridHints = GridHintsIncrementalBuilder.gridHints()
+                .then(7, 0, 9).then(1, 0, 3).then(4, 5, 6)
+                .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
+                .build();
+        SudokuSolver sudokuSolver = new SudokuSolver(gridHints);
+
+
+        // When
+        GridHints solvedGrid = sudokuSolver.solve();
+
+        // Then
+        assertThat(solvedGrid).isEqualTo(GridHintsIncrementalBuilder.gridHints()
+                .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)
+                .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
+                .build());
+    }
 }

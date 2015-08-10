@@ -29,7 +29,7 @@ public class GridLineFiller {
     public static List<Integer> missingFigures(LineHints lineHints, int size) {
         List<Integer> missingFigures = new ArrayList<>();
 
-        Set<Integer> lineHintsSet = lineHints.values();
+        Set<Integer> lineHintsSet = lineHints.valuesSet();
         for (int i = 1; i <= size; i++) {
             if (!lineHintsSet.contains(i)) {
                 missingFigures.add(i);

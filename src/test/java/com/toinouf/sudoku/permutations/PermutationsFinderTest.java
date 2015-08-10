@@ -1,4 +1,4 @@
-package com.toinouf.sudoku;
+package com.toinouf.sudoku.permutations;
 
 import org.junit.Test;
 

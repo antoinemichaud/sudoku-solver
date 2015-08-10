@@ -1,5 +1,6 @@
-package com.toinouf.sudoku;
+package com.toinouf.sudoku.permutations;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.toinouf.functional.FunctionalList;
 
 import java.util.ArrayList;
@@ -16,7 +17,8 @@ public class PermutationsFinder {
         return permutationsPrivate(figuresToPermute.copy());
     }
 
-    public List<List<Integer>> permutationsPrivate(FunctionalList<Integer> figuresToPermute) {
+    @VisibleForTesting
+    List<List<Integer>> permutationsPrivate(FunctionalList<Integer> figuresToPermute) {
         ArrayList<List<Integer>> permutations = new ArrayList<>();
         for (int i = 0; i < figuresToPermute.size(); i++) {
             FunctionalList<Integer> figuresToPermuteForChildren = figuresToPermute.copy();
