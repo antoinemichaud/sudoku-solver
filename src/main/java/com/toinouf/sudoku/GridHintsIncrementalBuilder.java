@@ -21,6 +21,10 @@ public class GridHintsIncrementalBuilder {
     }
 
     public GridHintsIncrementalBuilder then(int value) {
+        if (value == 0) {
+            increment();
+            return this;
+        }
         this.gridHints.put(new Pair<>(row, column), value);
         increment();
         return this;

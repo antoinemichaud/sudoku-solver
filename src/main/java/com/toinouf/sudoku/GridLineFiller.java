@@ -16,7 +16,11 @@ public class GridLineFiller {
     }
 
     public List<Integer> constituteLine() {
-        lineFigures.addAll(missingFigures(lineHints, size));
+        return constituteLine(missingFigures(lineHints, size));
+    }
+
+    public List<Integer> constituteLine(List<Integer> missingFigures) {
+        lineFigures.addAll(missingFigures);
         completeLineWithHints();
 
         return lineFigures;

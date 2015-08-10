@@ -29,6 +29,12 @@ public class Grid {
         return lineHints;
     }
 
+    public void setRow(int rowNum, LineHints lineHints) {
+        for (int i = 0; i < size; i++) {
+            gridHints.gridHints.put(new Pair<>(rowNum, i), lineHints.get(i).orElse(0));
+        }
+    }
+
     public LineHints getColumn(int columnNum) {
         LineHints lineHints = new LineHints();
         for (int i = 0; i < size; i++) {

@@ -54,7 +54,8 @@ public class GridHints {
         for (int row = 0; row < 9; row++) {
             for (int column = 0; column < 9; column++) {
                 per3ColumnCounter++;
-                stringBuilder.append(get(row, column).orElse(0)).append(" ");
+                String nextString = get(row, column).map(Object::toString).orElse("*");
+                stringBuilder.append(nextString).append(" ");
                 if (per3ColumnCounter == 3 || per3ColumnCounter == 6) {
                     stringBuilder.append("\t");
                 }
