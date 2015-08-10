@@ -3,8 +3,6 @@ package com.toinouf.sudoku;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.function.Function.identity;
-
 public class LineHints {
 
     Map<Integer, Integer> lineHints = new HashMap<>();
@@ -20,8 +18,12 @@ public class LineHints {
         return Optional.ofNullable(lineHints.get(pos));
     }
 
-    public Set<Integer> values() {
+    public Set<Integer> valuesSet() {
         return lineHints.values().stream().collect(Collectors.toSet());
+    }
+
+    public Collection<Integer> values() {
+        return lineHints.values();
     }
 
     public boolean isValidForSize(int size) {
@@ -34,7 +36,7 @@ public class LineHints {
                 return false;
             }
         }
-        return undiscoveredIntegers.isEmpty();
+        return true;
     }
 
     @Override

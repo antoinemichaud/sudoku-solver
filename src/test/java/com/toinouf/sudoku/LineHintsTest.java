@@ -31,7 +31,7 @@ public class LineHintsTest {
     }
 
     @Test
-    public void should_be_invalid_when_a_3_numbers_list_have_1_and_2() throws Exception {
+    public void should_be_valid_when_a_3_numbers_list_have_1_and_2() throws Exception {
         // Given
         LineHints lineHints = LineHintsBuilder.lineHints().withHint(0, 1).withHint(1, 2).build();
 
@@ -39,7 +39,7 @@ public class LineHintsTest {
         boolean valid = lineHints.isValidForSize(3);
 
         // Then
-        assertThat(valid).isFalse();
+        assertThat(valid).isTrue();
     }
 
     @Test
