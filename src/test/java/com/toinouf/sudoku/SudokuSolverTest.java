@@ -1,6 +1,5 @@
 package com.toinouf.sudoku;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +23,6 @@ public class SudokuSolverTest {
                 .then(9, 1, 2).then(3, 4, 5).then(6, 7, 8)
                 .build();
         SudokuSolver sudokuSolver = new SudokuSolver(gridHints);
-
 
         // When
         GridHints solvedGrid = sudokuSolver.solve();
@@ -51,7 +49,6 @@ public class SudokuSolverTest {
                 .build();
         SudokuSolver sudokuSolver = new SudokuSolver(gridHints);
 
-
         // When
         GridHints solvedGrid = sudokuSolver.solve();
 
@@ -76,7 +73,6 @@ public class SudokuSolverTest {
                 .then(9, 1, 2).then(3, 4, 5).then(6, 7, 8)
                 .build();
         SudokuSolver sudokuSolver = new SudokuSolver(gridHints);
-
 
         // When
         GridHints solvedGrid = sudokuSolver.solve();
@@ -115,7 +111,6 @@ public class SudokuSolverTest {
                 .build();
         SudokuSolver sudokuSolver = new SudokuSolver(gridHints);
 
-
         // When
         GridHints solvedGrid = sudokuSolver.solve();
 
@@ -146,7 +141,6 @@ public class SudokuSolverTest {
                 .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
                 .build();
         SudokuSolver sudokuSolver = new SudokuSolver(gridHints);
-
 
         // When
         GridHints solvedGrid = sudokuSolver.solve();
