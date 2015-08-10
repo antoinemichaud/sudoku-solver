@@ -136,10 +136,13 @@ public class SudokuSolverTest {
     }
 
     @Test
-    public void should_resolve_grid_with_two_holes_in_first_row() throws Exception {
+    public void should_resolve_grid_with_two_holes_in_first_row_according_invalid_column() throws Exception {
         // Given
         GridHints gridHints = GridHintsIncrementalBuilder.gridHints()
                 .then(7, 0, 9).then(1, 0, 3).then(4, 5, 6)
+                .then(0, 0, 0).then(0, 0, 0).then(0, 0, 0)
+                .then(0, 0, 0).then(0, 0, 0).then(0, 0, 0)
+
                 .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
                 .build();
         SudokuSolver sudokuSolver = new SudokuSolver(gridHints);
@@ -150,7 +153,11 @@ public class SudokuSolverTest {
 
         // Then
         assertThat(solvedGrid).isEqualTo(GridHintsIncrementalBuilder.gridHints()
+
                 .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)
+                .then(0, 0, 0).then(0, 0, 0).then(0, 0, 0)
+                .then(0, 0, 0).then(0, 0, 0).then(0, 0, 0)
+
                 .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
                 .build());
     }
