@@ -28,6 +28,7 @@ public class GridHints {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GridHints gridHints1 = (GridHints) o;
+        if (this.gridHints.size() != gridHints1.gridHints.size()) return false;
         for (Map.Entry<Pair<Integer>, Integer> indexWithHintEntry : gridHints.entrySet()) {
             if (!gridHints1.gridHints.get(indexWithHintEntry.getKey()).equals(indexWithHintEntry.getValue())) {
                 return false;

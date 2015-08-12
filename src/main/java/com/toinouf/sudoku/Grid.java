@@ -61,9 +61,24 @@ public class Grid {
     }
 
     public boolean isValid() {
+        return allColumnsAreValid() && allSquaresAreValid();
+    }
+
+    private boolean allColumnsAreValid() {
         for (int i = 0; i < REGULAR_SUDOKU_SIZE; i++) {
             if (!getColumn(i).isValid()) {
                 return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean allSquaresAreValid() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (!getSquare(new Pair<>(i * 3, j * 3), 9).isValid()) {
+                    return false;
+                }
             }
         }
         return true;

@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SudokuSolverTest {
 
     @Test
-    public void should_resolve_one_grid() throws Exception {
+    public void should_return_a_resolved_grid_as_is() throws Exception {
         // Given
         GridHints gridHints = GridHintsIncrementalBuilder.gridHints()
                 .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
@@ -32,7 +32,7 @@ public class SudokuSolverTest {
     }
 
     @Test
-    public void should_resolve_another_grid() throws Exception {
+    public void should_return_another_resolved_grid_as_is() throws Exception {
         // Given
         GridHints gridHints = GridHintsIncrementalBuilder.gridHints()
                 .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)
@@ -154,5 +154,27 @@ public class SudokuSolverTest {
 
                 .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
                 .build());
+    }
+
+    @Test
+    public void should_resolve_grid_with_two_holes_in_first_row_according_invalid_square() throws Exception {
+        // Given
+        GridHints gridHints = GridHintsIncrementalBuilder.gridHints()
+                .then(7, 8, 0).then(0, 2, 3).then(4, 5, 6)
+                .then(1, 2, 3).then(0, 0, 0).then(7, 8, 9)
+                .then(4, 5, 6).then(0, 0, 0).then(1, 2, 3)
+                .build();
+        SudokuSolver sudokuSolver = new SudokuSolver(gridHints);
+
+        // When
+        GridHints solvedGrid = sudokuSolver.solve();
+
+        // Then
+        GridHints expectedResult = GridHintsIncrementalBuilder.gridHints()
+                .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)
+                .then(1, 2, 3).then(0, 0, 0).then(7, 8, 9)
+                .then(4, 5, 6).then(0, 0, 0).then(1, 2, 3)
+                .build();
+        assertThat(solvedGrid).isEqualTo(expectedResult);
     }
 }

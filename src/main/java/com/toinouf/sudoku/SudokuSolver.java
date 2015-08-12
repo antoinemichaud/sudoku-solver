@@ -19,7 +19,7 @@ public class SudokuSolver {
     public GridHints solve() {
         rowBeingSolvedNow = currentGrid.getRow(0);
 
-        if (!rowBeingSolvedNow.isValid()) {
+        if (rowBeingSolvedNow.isNotComplete()) {
             PermutationsFinder permutationsFinder = new PermutationsFinder(rowBeingSolvedNow.missingFigures());
             fillWithAValidPermutation(permutationsFinder.permutations());
         }

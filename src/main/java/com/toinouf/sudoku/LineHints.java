@@ -55,6 +55,10 @@ public class LineHints {
         return true;
     }
 
+    public boolean isNotComplete() {
+        return values().size() != size;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
