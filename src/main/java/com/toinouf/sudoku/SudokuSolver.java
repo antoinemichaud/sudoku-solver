@@ -7,22 +7,33 @@ import java.util.List;
 public class SudokuSolver {
 
     public static final int REGULAR_SUDOKU_SIZE = 9;
-    private Grid originalGrid;
-    private LinkedGrid currentGrid;
+    private Grid currentGrid;
     private LineHints rowBeingSolvedNow;
+    private int currentRowNum;
+
+    public SudokuSolver(Grid grid, int currentRowNum) {
+        this.currentGrid = new Grid(grid);
+        this.currentRowNum = currentRowNum;
+        this.rowBeingSolvedNow = currentGrid.getRow(currentRowNum);
+    }
 
     public SudokuSolver(GridHints gridHints) {
-        this.originalGrid = new Grid(gridHints, REGULAR_SUDOKU_SIZE);
-        this.currentGrid = new LinkedGrid(originalGrid);
+        this(gridHints, 0);
+    }
+
+    public SudokuSolver(GridHints gridHints, int currentRowNum) {
+        this.currentGrid = new Grid(gridHints, REGULAR_SUDOKU_SIZE);
+        this.currentRowNum = currentRowNum;
+        this.rowBeingSolvedNow = currentGrid.getRow(currentRowNum);
     }
 
     public GridHints solve() {
-        rowBeingSolvedNow = currentGrid.getRow(0);
-
         if (rowBeingSolvedNow.isNotComplete()) {
             PermutationsFinder permutationsFinder = new PermutationsFinder(rowBeingSolvedNow.missingFigures());
             fillWithAValidPermutation(permutationsFinder.permutations());
         }
+
+        currentGrid.isValid();
 
         return currentGrid.gridHints;
     }

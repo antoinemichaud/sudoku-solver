@@ -15,8 +15,16 @@ public class GridHints {
         this.gridHints = gridHints;
     }
 
+    public GridHints(GridHints gridHints) {
+        this.gridHints = new HashMap<>(gridHints.gridHints);
+    }
+
     public Optional<Integer> get(int row, int column) {
         return Optional.ofNullable(gridHints.get(new Pair<>(row, column)));
+    }
+
+    public Set<Pair<Integer>> getKeys() {
+        return gridHints.keySet();
     }
 
     public Set<Integer> values() {

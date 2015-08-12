@@ -16,6 +16,11 @@ public class Grid {
         this.size = size;
     }
 
+    public Grid(Grid grid) {
+        this.gridHints = new GridHints(grid.gridHints);
+        this.size = grid.size;
+    }
+
     public int size() {
         return size;
     }
