@@ -54,11 +54,14 @@ public class Grid {
     }
 
     public LineHints getSquare(Pair<Integer> topLeftCornerPos, int size) {
-        LineHints lineHints = new LineHints(size);
+        LineHints lineHints = new LineHints(size * size);
         int pos = 0;
         for (int row = topLeftCornerPos.left; row < size + topLeftCornerPos.left; row++) {
             for (int column = topLeftCornerPos.right; column < size + topLeftCornerPos.right; column++) {
-                lineHints.lineHints.put(pos, gridHints.get(row, column).orElse(0));
+                Optional<Integer> optionalHint = gridHints.get(row, column);
+                if (optionalHint.isPresent()) {
+                    lineHints.lineHints.put(pos, optionalHint.orElse(0));
+                }
                 pos++;
             }
         }
@@ -81,7 +84,7 @@ public class Grid {
     private boolean allSquaresAreValid() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (!getSquare(new Pair<>(i * 3, j * 3), 9).isValid()) {
+                if (!getSquare(new Pair<>(i * 3, j * 3), 3).isValid()) {
                     return false;
                 }
             }

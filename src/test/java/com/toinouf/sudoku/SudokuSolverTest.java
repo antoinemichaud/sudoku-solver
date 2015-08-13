@@ -173,8 +173,7 @@ public class SudokuSolverTest {
     }
 
     @Test
-    @Ignore
-    public void should_resolve_grid_with_one_hole_in_second_row_according_invalid_square() throws Exception {
+    public void should_resolve_grid_with_one_hole_in_second_row() throws Exception {
         // Given
         GridHints gridHints = gridHints()
                 .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)

@@ -28,25 +28,22 @@ public class SudokuSolver {
     }
 
     public GridHints solve() {
-        if (rowBeingSolvedNow.isNotComplete()) {
-            PermutationsFinder permutationsFinder = new PermutationsFinder(rowBeingSolvedNow.missingFigures());
-            fillWithAValidPermutation(permutationsFinder.permutations());
-        }
-
-        currentGrid.isValid();
-
-        return currentGrid.gridHints;
+        PermutationsFinder permutationsFinder = new PermutationsFinder(rowBeingSolvedNow.missingFigures());
+        return fillWithAValidPermutation(permutationsFinder.permutations());
     }
 
-    private void fillWithAValidPermutation(List<List<Integer>> possiblePermutations) {
+    private GridHints fillWithAValidPermutation(List<List<Integer>> possiblePermutations) {
         for (List<Integer> possiblePermutation : possiblePermutations) {
             GridLineFiller gridLineFiller = new GridLineFiller(9, rowBeingSolvedNow);
             List<Integer> filledLine = gridLineFiller.constituteLine(possiblePermutation);
-            currentGrid.setRow(0, LineHintsBuilder.from(filledLine));
+            currentGrid.setRow(currentRowNum, LineHintsBuilder.from(filledLine));
             if (currentGrid.isValid()) {
                 break;
             }
         }
+        if (currentRowNum == 0)
+            return new SudokuSolver(currentGrid, currentRowNum + 1).solve();
+        return currentGrid.gridHints;
     }
 
 }
