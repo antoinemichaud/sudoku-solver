@@ -190,4 +190,46 @@ public class SudokuSolverTest {
                 .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
                 .build());
     }
+
+    @Test
+    public void should_resolve_grid_with_one_hole_in_3rd_row() throws Exception {
+        // Given
+        GridHints gridHints = gridHints()
+                .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)
+                .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
+                .then(4, 5, 6).then(7, 0, 9).then(1, 2, 3)
+                .build();
+        SudokuSolver sudokuSolver = new SudokuSolver(gridHints);
+
+        // When
+        GridHints solvedGrid = sudokuSolver.solve();
+
+        // Then
+        assertThat(solvedGrid).includes(gridHints()
+                .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)
+                .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
+                .then(4, 5, 6).then(7, 8, 9).then(1, 2, 3)
+                .build());
+    }
+
+    @Test
+    @Ignore
+    public void should_resolve_first_row_according_2nd_row_resolution() {
+        // Given
+        GridHints gridHints = gridHints()
+                .then(7, 8, 0).then(1, 0, 3).then(4, 5, 6)
+                .then(1, 0, 3).then(4, 5, 6).then(7, 8, 9)
+                .then(4, 5, 6).then(7, 8, 0).then(1, 2, 3)
+                .build();
+        SudokuSolver sudokuSolver = new SudokuSolver(gridHints);
+
+        // When
+        GridHints solvedGrid = sudokuSolver.solve();
+
+        // Then
+        assertThat(solvedGrid).includes(gridHints()
+                .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)
+                .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
+                .build());
+    }
 }
