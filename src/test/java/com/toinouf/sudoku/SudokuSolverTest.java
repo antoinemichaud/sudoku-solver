@@ -1,6 +1,5 @@
 package com.toinouf.sudoku;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.toinouf.sudoku.GridHintsIncrementalBuilder.gridHints;
@@ -213,7 +212,6 @@ public class SudokuSolverTest {
     }
 
     @Test
-    @Ignore
     public void should_resolve_first_row_according_2nd_row_resolution() {
         // Given
         GridHints gridHints = gridHints()
@@ -231,5 +229,30 @@ public class SudokuSolverTest {
                 .then(7, 8, 9).then(1, 2, 3).then(4, 5, 6)
                 .then(1, 2, 3).then(4, 5, 6).then(7, 8, 9)
                 .build());
+    }
+
+    @Test
+    public void acceptance_test() throws Exception {
+        // Given
+        GridHints gridHints = gridHints()
+                .then(0, 9, 0).then(0, 4, 6).then(0, 3, 0)
+                .then(1, 5, 4).then(0, 0, 0).then(0, 2, 0)
+                .then(0, 0, 0).then(0, 0, 5).then(0, 0, 8)
+
+                .then(6, 0, 0).then(0, 0, 7).then(2, 9, 0)
+                .then(0, 7, 1).then(6, 0, 2).then(8, 5, 0)
+                .then(0, 8, 3).then(9, 0, 0).then(0, 0, 1)
+
+                .then(5, 0, 0).then(7, 0, 0).then(0, 0, 0)
+                .then(0, 1, 0).then(0, 0, 0).then(5, 8, 9)
+                .then(0, 2, 0).then(5, 9, 0).then(0, 6, 0)
+                .build();
+        SudokuSolver sudokuSolver = new SudokuSolver(gridHints);
+
+        // When
+        GridHints solvedGrid = sudokuSolver.solve();
+
+        // Then
+        System.out.println(solvedGrid.toString());
     }
 }

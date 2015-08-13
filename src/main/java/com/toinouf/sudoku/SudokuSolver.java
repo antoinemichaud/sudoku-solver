@@ -2,6 +2,8 @@ package com.toinouf.sudoku;
 
 import com.toinouf.sudoku.permutations.PermutationsFinder;
 
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,11 +13,13 @@ public class SudokuSolver {
     private Grid currentGrid;
     private LineHints rowBeingSolvedNow;
     private int currentRowNum;
+    private PermutationsFinder permutationsFinder;
 
     public SudokuSolver(Grid grid, int currentRowNum) {
         this.currentGrid = new Grid(grid);
         this.currentRowNum = currentRowNum;
         this.rowBeingSolvedNow = currentGrid.getRow(currentRowNum);
+        this.permutationsFinder = new PermutationsFinder(rowBeingSolvedNow.missingFigures());
     }
 
     public SudokuSolver(GridHints gridHints) {
@@ -26,15 +30,24 @@ public class SudokuSolver {
         this.currentGrid = new Grid(gridHints, REGULAR_SUDOKU_SIZE);
         this.currentRowNum = currentRowNum;
         this.rowBeingSolvedNow = currentGrid.getRow(currentRowNum);
+        permutationsFinder = new PermutationsFinder(rowBeingSolvedNow.missingFigures());
     }
 
     public GridHints solve() {
-        PermutationsFinder permutationsFinder = new PermutationsFinder(rowBeingSolvedNow.missingFigures());
-        return fillWithAValidPermutation(permutationsFinder.permutations()).get();
+        return fillWithAValidPermutation().get();
     }
 
-    private Optional<GridHints> fillWithAValidPermutation(List<List<Integer>> possiblePermutations) {
-        for (List<Integer> possiblePermutation : possiblePermutations) {
+    private Optional<GridHints> fillWithAValidPermutation() {
+        return fillWithAValidPermutation(new LinkedList<>(permutationsFinder.permutations()));
+    }
+
+    private Optional<GridHints> fillWithAValidPermutation(Deque<List<Integer>> possiblePermutations) {
+        if (possiblePermutations.isEmpty()) {
+            return Optional.empty();
+        }
+        int initialSize = possiblePermutations.size();
+        for (int i = 0; i < initialSize; i++) {
+            List<Integer> possiblePermutation = possiblePermutations.removeFirst();
             GridLineFiller gridLineFiller = new GridLineFiller(9, rowBeingSolvedNow);
             List<Integer> filledLine = gridLineFiller.constituteLine(possiblePermutation);
             currentGrid.setRow(currentRowNum, LineHintsBuilder.from(filledLine));
@@ -43,9 +56,17 @@ public class SudokuSolver {
             }
         }
         if (thisRowHaveChild()) {
-            return resolutionOfChild();
+            Optional<GridHints> childResolution = resolutionOfChild();
+            if (childResolution.isPresent()) {
+                return childResolution;
+            } else {
+                return fillWithAValidPermutation(possiblePermutations);
+            }
         }
-        return Optional.of(currentGrid.gridHints);
+        if (currentGrid.isValid()) {
+            return Optional.of(currentGrid.gridHints);
+        }
+        return Optional.empty();
     }
 
     private boolean thisRowHaveChild() {
@@ -53,9 +74,7 @@ public class SudokuSolver {
     }
 
     private Optional<GridHints> resolutionOfChild() {
-        Optional<GridHints> childSolving;
-        childSolving = Optional.of(new SudokuSolver(currentGrid, currentRowNum + 1).solve());
-        return childSolving;
+        return new SudokuSolver(currentGrid, currentRowNum + 1).fillWithAValidPermutation();
     }
 
 }
